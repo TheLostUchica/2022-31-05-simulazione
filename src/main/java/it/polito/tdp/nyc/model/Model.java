@@ -60,4 +60,11 @@ public class Model {
 		return result;
 	}
 	
+	public String simula(City c, int n) {
+		Simulator sim = new Simulator(n, this, c);
+		sim.init();
+		sim.run();
+		return sim.getTime()/1440 + "giorni.\n";
+	}
+	
 }

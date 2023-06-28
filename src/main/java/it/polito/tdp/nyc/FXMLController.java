@@ -89,6 +89,9 @@ public class FXMLController {
 
     @FXML
     void doSimula(ActionEvent event) {
+    	City c = this.cmbQuartiere.getValue();
+    	int i = Integer.parseInt(this.txtMemoria.getText());
+    	this.txtResult.appendText(model.simula(c, i));
 
     }
 

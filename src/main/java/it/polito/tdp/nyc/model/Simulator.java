@@ -32,6 +32,7 @@ public class Simulator {
 	}
 	
 	public void run() {
+		while(!queue.isEmpty())
 		process(queue.poll());
 	}
 	
@@ -40,8 +41,8 @@ public class Simulator {
 		time = event;
 		
 		if(hotmancanti!=0) {
-			double time = (Math.random()*10) + 10;
-			queue.add(event+time);
+			double dd = (Math.random()*10) + 10;
+			queue.add(event+dd);
 			this.hotmancanti--;
 			this.hotspot++;
 		}else {
@@ -57,6 +58,7 @@ public class Simulator {
 				for(Adiacenza a : model.getAd(city)) {
 					if(!risolte.contains(a.getCity())) {
 						aa = a;
+						break;
 					}
 				}
 				
