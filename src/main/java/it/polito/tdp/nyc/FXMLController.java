@@ -6,6 +6,9 @@ package it.polito.tdp.nyc;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import it.polito.tdp.nyc.model.Adiacenza;
+import it.polito.tdp.nyc.model.City;
 import it.polito.tdp.nyc.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -39,7 +42,7 @@ public class FXMLController {
     private ComboBox<String> cmbProvider; // Value injected by FXMLLoader
 
     @FXML // fx:id="cmbQuartiere"
-    private ComboBox<?> cmbQuartiere; // Value injected by FXMLLoader
+    private ComboBox<City> cmbQuartiere; // Value injected by FXMLLoader
 
     @FXML // fx:id="txtMemoria"
     private TextField txtMemoria; // Value injected by FXMLLoader
@@ -58,11 +61,29 @@ public class FXMLController {
 
     @FXML
     void doCreaGrafo(ActionEvent event) {
+    	this.txtResult.clear();
+    	this.cmbQuartiere.getItems().clear();
+    	String s = this.cmbProvider.getValue();
+    	if(s!=null) {
+    		model.creaGrafo(s);
+    		this.txtResult.appendText("Creato un grafo con "+model.getGrafo().vertexSet().size()+" archi e "+model.getGrafo().edgeSet().size()+" archi.\n");
+    		this.setCombo2();
+    	}else {
+    		this.txtResult.appendText("Inserirmento non corretto.");
+    	}
     	
     }
 
     @FXML
     void doQuartieriAdiacenti(ActionEvent event) {
+    	City c = this.cmbQuartiere.getValue();
+    	if(c!=null) {
+    		for(Adiacenza a : model.getAd(c)) {
+    			this.txtResult.appendText(a.toString()+"\n");
+    		}
+    	}else {
+    		this.txtResult.appendText("Inserirmento non corretto.");
+    	}
     	
     }
 
@@ -87,6 +108,14 @@ public class FXMLController {
     
     public void setModel(Model model) {
     	this.model = model;
+    }
+    
+    public void setCombo1() {
+    	this.cmbProvider.getItems().addAll(model.setCombo1());
+    }
+    
+    public void setCombo2() {
+    	this.cmbQuartiere.getItems().addAll(model.setCombo2());
     }
 
 }
